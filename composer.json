@@ -8,7 +8,7 @@
     "repositories": [
         {
             "type": "git",
-            "url": "https://github.com/sellerlabs/oauth-php.git"
+            "url": "https://github.com/sellerlabs/oauth-php"
         }
     ],
     "authors": [
@@ -25,7 +25,6 @@
     "require-dev": {
         "illuminate/support": "~4"
     },
-    "require-all": true,
     "autoload": {
         "psr-0": {
             "Artdarek\\OAuth": "src/"
