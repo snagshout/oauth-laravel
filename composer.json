@@ -1,5 +1,5 @@
 {
-    "name": "artdarek/oauth-4-laravel",
+    "name": "sellerlabs/oauth-laravel",
     "type": "library",
     "description": "OAuth Service Provider for Laravel 4",
     "keywords": ["OAuth", "Lusitanian", "laravel", "php"],
