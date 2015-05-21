@@ -5,6 +5,12 @@
     "keywords": ["OAuth", "Lusitanian", "laravel", "php"],
     "homepage": "https://github.com/artdarek/oauth-4-laravel",
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/etcinit/oauth-php.git"
+        }
+    ],
     "authors": [
         {
             "name": "Artdarek",
@@ -13,17 +19,17 @@
         }
     ],
     "require": {
-        "php": ">=5.3",     
+        "php": ">=5.3",
         "lusitanian/oauth": "dev-master"
     },
     "require-dev": {
         "illuminate/support": "~4"
-    },    
+    },
     "require-all": true,
-    "autoload": {    
+    "autoload": {
         "psr-0": {
             "Artdarek\\OAuth": "src/"
         }
-    },    
-    "minimum-stability": "dev"    
+    },
+    "minimum-stability": "dev"
 }
