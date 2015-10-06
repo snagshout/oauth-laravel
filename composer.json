@@ -20,7 +20,7 @@
     ],
     "require": {
         "php": ">=5.3",
-        "sellerlabs/oauth": "dev-master"
+        "sellerlabs/oauth-php": "dev-master"
     },
     "require-dev": {
         "illuminate/support": "~4"
