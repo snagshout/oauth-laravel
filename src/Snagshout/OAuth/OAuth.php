@@ -5,15 +5,13 @@
  * @license    http://www.opensource.org/licenses/mit-license.html MIT License
  */
 
-namespace Artdarek\OAuth;
+namespace Snagshout\OAuth;
 
-use Illuminate\Support\ServiceProvider;
-
-use \Config;
-use \URL;
-
-use \OAuth\ServiceFactory;
-use \OAuth\Common\Consumer\Credentials;
+use Snagshout\OAuth\Common\Storage\LaravelSession;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\URL;
+use OAuth\Common\Consumer\Credentials;
+use OAuth\ServiceFactory;
 
 class OAuth
 {
@@ -65,22 +63,22 @@ class OAuth
      *
      * @param string $service
      */
-    public function setConfig( $service )
+    public function setConfig($service)
     {
         // if config/oauth-4-laravel.php exists use this one
-        if ( Config::get('oauth-4-laravel.consumers') != null ) {
+        if (Config::get('oauth-4-laravel.consumers') != null) {
 
             $this->_storage_name = Config::get('oauth-4-laravel.storage', 'Session');
             $this->_client_id = Config::get("oauth-4-laravel.consumers.$service.client_id");
             $this->_client_secret = Config::get("oauth-4-laravel.consumers.$service.client_secret");
-            $this->_scope = Config::get("oauth-4-laravel.consumers.$service.scope", array() );
+            $this->_scope = Config::get("oauth-4-laravel.consumers.$service.scope", array());
 
-        // else try to find config in packages configs
+            // else try to find config in packages configs
         } else {
             $this->_storage_name = Config::get('oauth-4-laravel::storage', 'Session');
             $this->_client_id = Config::get("oauth-4-laravel::consumers.$service.client_id");
             $this->_client_secret = Config::get("oauth-4-laravel::consumers.$service.client_secret");
-            $this->_scope = Config::get("oauth-4-laravel::consumers.$service.scope", array() );
+            $this->_scope = Config::get("oauth-4-laravel::consumers.$service.scope", array());
         }
     }
 
@@ -88,12 +86,12 @@ class OAuth
      * Create storage instance
      *
      * @param string $storageName
-     * @return \OAuth\Common\Storage
+     * @return LaravelSession
      */
     public function createStorageInstance($storageName)
     {
         if ($storageName == "LaravelSession") {
-            $storageClass = "\\Artdarek\\OAuth\\Common\\Storage\\$storageName";
+            $storageClass = "\\Snagshout\\OAuth\\Common\\Storage\\$storageName";
         } else {
             $storageClass = "\\OAuth\\Common\\Storage\\$storageName";
         }
@@ -115,18 +113,18 @@ class OAuth
     }
 
     /**
-     * @param  string $service
-     * @param  string $url
-     * @param  array  $scope
+     * @param string $service
+     * @param string $url
+     * @param array $scope
      * @return \OAuth\Common\Service\AbstractService
      */
-    public function consumer( $service, $url = null, $scope = null )
+    public function consumer($service, $url = null, $scope = null)
     {
         // get config
-        $this->setConfig( $service );
+        $this->setConfig($service);
 
         // get storage object
-        $storage = $this->createStorageInstance( $this->_storage_name );
+        $storage = $this->createStorageInstance($this->_storage_name);
 
         // create credentials object
         $credentials = new Credentials(
@@ -136,8 +134,7 @@ class OAuth
         );
 
         // check if scopes were provided
-        if (is_null($scope))
-        {
+        if (is_null($scope)) {
             // get scope from config (default to empty array)
             $scope = $this->_scope;
         }

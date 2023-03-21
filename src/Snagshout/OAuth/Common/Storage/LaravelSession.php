@@ -1,12 +1,12 @@
 <?php
 
-namespace Artdarek\OAuth\Common\Storage;
+namespace Snagshout\OAuth\Common\Storage;
 
-use OAuth\Common\Token\TokenInterface;
-use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Storage\Exception\TokenNotFoundException;
-use OAuth\Common\Storage\Exception\AuthorizationStateNotFoundException;
 use Illuminate\Support\Facades\Session;
+use OAuth\Common\Storage\Exception\AuthorizationStateNotFoundException;
+use OAuth\Common\Storage\Exception\TokenNotFoundException;
+use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\Common\Token\TokenInterface;
 
 /**
  * Stores a token in a Laravel session.
@@ -38,11 +38,12 @@ class LaravelSession implements TokenStorageInterface
         $sessionNamespace = 'lusitanian',
         $sessionVariableName = 'oauth_token',
         $stateVariableName = 'oauth_state'
-    ) {
+    )
+    {
 
         $this->sessionNamespace = $sessionNamespace;
-        $this->sessionVariableName = $sessionNamespace.'.'.$sessionVariableName;
-        $this->stateVariableName = $sessionNamespace.'.'.$stateVariableName;
+        $this->sessionVariableName = $sessionNamespace . '.' . $sessionVariableName;
+        $this->stateVariableName = $sessionNamespace . '.' . $stateVariableName;
 
     }
 
@@ -52,7 +53,7 @@ class LaravelSession implements TokenStorageInterface
     public function retrieveAccessToken($service)
     {
         if ($this->hasAccessToken($service)) {
-            return Session::get($this->sessionVariableName.'.'.$service);
+            return Session::get($this->sessionVariableName . '.' . $service);
         }
 
         throw new TokenNotFoundException('Token not found in session, are you sure you stored it?');
@@ -63,7 +64,7 @@ class LaravelSession implements TokenStorageInterface
      */
     public function storeAccessToken($service, TokenInterface $token)
     {
-        Session::put($this->sessionVariableName.".".$service, $token);
+        Session::put($this->sessionVariableName . "." . $service, $token);
 
         // allow chaining
         return $this;
@@ -74,7 +75,7 @@ class LaravelSession implements TokenStorageInterface
      */
     public function hasAccessToken($service)
     {
-        $token = Session::get($this->sessionVariableName.'.'.$service);
+        $token = Session::get($this->sessionVariableName . '.' . $service);
         return !empty($token);
     }
 
@@ -105,7 +106,7 @@ class LaravelSession implements TokenStorageInterface
      */
     public function storeAuthorizationState($service, $state)
     {
-        Session::put($this->stateVariableName.'.'.$service, $state);
+        Session::put($this->stateVariableName . '.' . $service, $state);
 
         // allow chaining
         return $this;
@@ -116,7 +117,7 @@ class LaravelSession implements TokenStorageInterface
      */
     public function hasAuthorizationState($service)
     {
-        $state = Session::get($this->stateVariableName.'.'.$service);
+        $state = Session::get($this->stateVariableName . '.' . $service);
         return !empty($state);
     }
 
@@ -126,7 +127,7 @@ class LaravelSession implements TokenStorageInterface
     public function retrieveAuthorizationState($service)
     {
         if ($this->hasAuthorizationState($service)) {
-            return Session::get($this->stateVariableName.'.'.$service);
+            return Session::get($this->stateVariableName . '.' . $service);
         }
 
         throw new AuthorizationStateNotFoundException('State not found in session, are you sure you stored it?');
@@ -137,7 +138,7 @@ class LaravelSession implements TokenStorageInterface
      */
     public function clearAuthorizationState($service)
     {
-        Session::forget($this->stateVariableName.'.'.$service);
+        Session::forget($this->stateVariableName . '.' . $service);
 
         // allow chaining
         return $this;
